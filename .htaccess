@@ -1,0 +1,4 @@
+# auto-prepend config.php on every PHP request
+<IfModule mod_php7.c>
+    php_value auto_prepend_file "config.php"
+</IfModule>

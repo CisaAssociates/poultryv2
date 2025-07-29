@@ -1,0 +1,223 @@
+/* Farmer Dashboard Custom Styles */
+
+/* Task Status Indicators */
+.task-status-completed { background-color: var(--secondary-color); }
+.task-status-pending { background-color: var(--warning-color); }
+.task-status-urgent { background-color: var(--danger-color); }
+
+/* Card with colored left border */
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+.border-left-danger {
+    border-left: 0.25rem solid #e74a3b !important;
+}
+
+/* Improved Task Item Styles */
+.task-item {
+    cursor: move;
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.35rem;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.task-item.draggable-source--is-dragging {
+    opacity: 0.5;
+}
+
+.task-item.draggable-mirror {
+    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.3);
+}
+
+/* Timeline styles for reports and task views */
+.timeline {
+    position: relative;
+    padding-left: 4rem;
+    margin: 0 0 0 1rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e3e6f0;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item-marker {
+    position: absolute;
+    left: -4rem;
+    height: 3rem;
+    width: 3rem;
+}
+
+.timeline-item-marker-text {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    color: #a2acba;
+}
+
+.timeline-item-marker-indicator {
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 100%;
+    margin-left: 1rem;
+}
+
+.timeline-item-content {
+    padding: 0 0 0 1rem;
+    font-weight: 500;
+}
+
+/* Inventory progress bars */
+.progress {
+    height: 1rem;
+    font-size: 0.75rem;
+    background-color: #eaecf4;
+    border-radius: 0.35rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    transition: width 0.6s ease;
+}
+
+/* Equipment status cards */
+.equipment-card {
+    transition: all 0.2s;
+}
+
+.equipment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Data tables */
+.table-responsive {
+    padding-bottom: 1px;
+}
+
+.table th {
+    background-color: #f8f9fc;
+    border-bottom-width: 1px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #4e73df;
+}
+
+/* Egg sorting feed */
+.egg-item {
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.egg-item:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+/* Print styles for reports */
+@media print {
+    .navbar, .sidebar, .card-header, .modal, .btn, 
+    footer, form, .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .card-body {
+        padding: 0 !important;
+    }
+    
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .container-fluid {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 3rem;
+    }
+    
+    .timeline-item-marker {
+        left: -3rem;
+    }
+    
+    .task-item {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Custom scrollbar for task containers */
+.task-list {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f8f9fc;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: #f8f9fc;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 20px;
+} 
