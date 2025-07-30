@@ -132,9 +132,9 @@ function db_connect()
         if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
             // Production database credentials
             $host = 'localhost'; // Most shared hosting uses localhost
-            $user = 'u347279731_poultryv2'; 
-            $pass = 'Poultyv2025'; 
-            $db   = 'u347279731_poultryv2_db'; 
+            $user = 'u347279731_poultyv2'; 
+            $pass = 'Poultyv2025';
+            $db   = 'u347279731_poultyv2_db'; 
             
             // Debug connection info
             error_log('Using production database settings');
