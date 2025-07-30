@@ -2,6 +2,17 @@
 php_flag display_errors on
 php_value error_reporting E_ALL
 
+# Ensure PHP files are processed correctly
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# Set PHP memory limit
+php_value memory_limit 256M
+
+# Set maximum execution time
+php_value max_execution_time 300
+
 # Set default character set
 AddDefaultCharset UTF-8
 

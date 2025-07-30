@@ -131,37 +131,64 @@ function db_connect()
         // Check if we're in production environment (on the server)
         if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
             // Production database credentials
-            $host = 'localhost'; // Update this with your actual production database host
-            $user = 'u347279731_poultryv2'; // Update this with your actual production database username
-            $pass = 'Poultyv2025'; // Update this with your actual production database password
+            $host = 'localhost'; // Most shared hosting uses localhost
+            $user = 'u347279731_poultryv2'; 
+            $pass = 'Poultyv2025'; 
             $db   = 'u347279731_poultryv2_db'; 
+            
+            // Debug connection info
+            error_log('Using production database settings');
+            error_log('Server Name: ' . $_SERVER['SERVER_NAME']);
         } else {
             // Local development database credentials
             $host = 'localhost';
             $user = 'root';
             $pass = '';
             $db   = 'poultryv2_db';
-        }
-
-        $mysqli = new mysqli($host, $user, $pass, $db);
-
-        if ($mysqli->connect_errno) {
-            error_log('Database connection failed: ' . $mysqli->connect_error);
             
-            // More detailed error handling for debugging
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
-                // In production, log more details but show generic message to users
-                error_log('Connection details: Host=' . $host . ', User=' . $user . ', DB=' . $db);
-                error_log('Server info: ' . json_encode($_SERVER, JSON_UNESCAPED_SLASHES));
-                die('Database connection error. Please contact the administrator.');
-            } else {
-                // In development, show detailed error
-                die('Database connection error: ' . $mysqli->connect_error);
-            }
+            // Debug connection info
+            error_log('Using local database settings');
+            error_log('Server Name: ' . ($_SERVER['SERVER_NAME'] ?? 'Not set'));
         }
 
-        $mysqli->set_charset('utf8mb4');
-        $mysqli->query("SET SESSION sql_mode = 'STRICT_ALL_TABLES'");
+        try {
+            // Set error mode to exceptions for better error handling
+            $mysqli = new mysqli($host, $user, $pass, $db);
+
+            if ($mysqli->connect_errno) {
+                error_log('Database connection failed: ' . $mysqli->connect_error);
+                
+                // More detailed error handling for debugging
+                if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
+                    // In production, log more details but show generic message to users
+                    error_log('Connection details: Host=' . $host . ', User=' . $user . ', DB=' . $db);
+                    error_log('Server info: ' . json_encode($_SERVER, JSON_UNESCAPED_SLASHES));
+                    
+                    // For debugging purposes, show detailed error in production temporarily
+                    echo '<div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin: 10px 0; border: 1px solid #f5c6cb; border-radius: 4px;">';
+                    echo '<h3>Database Connection Error</h3>';
+                    echo '<p>Error: ' . $mysqli->connect_error . '</p>';
+                    echo '<p>Host: ' . $host . '</p>';
+                    echo '<p>User: ' . $user . '</p>';
+                    echo '<p>Database: ' . $db . '</p>';
+                    echo '</div>';
+                    exit;
+                } else {
+                    // In development, show detailed error
+                    die('Database connection error: ' . $mysqli->connect_error);
+                }
+            }
+
+            $mysqli->set_charset('utf8mb4');
+            $mysqli->query("SET SESSION sql_mode = 'STRICT_ALL_TABLES'");
+        } catch (Exception $e) {
+            error_log('Database connection exception: ' . $e->getMessage());
+            echo '<div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin: 10px 0; border: 1px solid #f5c6cb; border-radius: 4px;">';
+            echo '<h3>Database Connection Exception</h3>';
+            echo '<p>' . $e->getMessage() . '</p>';
+            echo '</div>';
+            exit;
+        }
     }
 
     return $mysqli;
