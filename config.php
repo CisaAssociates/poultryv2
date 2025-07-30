@@ -129,9 +129,9 @@ function db_connect()
 
     if ($mysqli === null) {
         $host = 'localhost';
-        $user = 'root';
-        $pass = '';
-        $db   = 'poultryv2_db';
+        $user = 'u347279731_poultryv2';
+        $db   = 'u347279731_poultryv2_db';
+        $pass = 'Poultyv2025';
 
         $mysqli = new mysqli($host, $user, $pass, $db);
 
