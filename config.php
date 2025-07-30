@@ -1,6 +1,6 @@
 <?php
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_secure', 0);
 ini_set('session.use_strict_mode', 1);
 ini_set('session.cookie_samesite', 'Strict');
 
@@ -128,16 +128,36 @@ function db_connect()
     static $mysqli = null;
 
     if ($mysqli === null) {
-        $host = 'localhost';
-        $user = 'root';
-        $pass = '';
-        $db   = 'poultryv2_db';
+        // Check if we're in production environment (on the server)
+        if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
+            // Production database credentials
+            $host = 'localhost'; // Update this with your actual production database host
+            $user = 'u347279731_poultryv2'; // Update this with your actual production database username
+            $pass = 'Poultyv2025'; // Update this with your actual production database password
+            $db   = 'u347279731_poultryv2_db'; // Update this with your actual production database name
+        } else {
+            // Local development database credentials
+            $host = 'localhost';
+            $user = 'root';
+            $pass = '';
+            $db   = 'poultryv2_db';
+        }
 
         $mysqli = new mysqli($host, $user, $pass, $db);
 
         if ($mysqli->connect_errno) {
             error_log('Database connection failed: ' . $mysqli->connect_error);
-            die('Database connection error. Please try again later.');
+            
+            // More detailed error handling for debugging
+            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
+                // In production, log more details but show generic message to users
+                error_log('Connection details: Host=' . $host . ', User=' . $user . ', DB=' . $db);
+                error_log('Server info: ' . json_encode($_SERVER, JSON_UNESCAPED_SLASHES));
+                die('Database connection error. Please contact the administrator.');
+            } else {
+                // In development, show detailed error
+                die('Database connection error: ' . $mysqli->connect_error);
+            }
         }
 
         $mysqli->set_charset('utf8mb4');
