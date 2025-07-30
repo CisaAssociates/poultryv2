@@ -128,10 +128,20 @@ function db_connect()
     static $mysqli = null;
 
     if ($mysqli === null) {
-        $host = 'localhost';
-        $user = 'root';
-        $pass = '';
-        $db   = 'poultryv2_db';
+        // Check if we're in production environment (on the server)
+        if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'poultryv2.slsuisa.com') {
+            // Production database credentials
+            $host = 'localhost'; // Update this with your actual production database host
+            $user = 'u347279731_poultryv2'; // Update this with your actual production database username
+            $pass = 'Poultyv2025'; // Update this with your actual production database password
+            $db   = 'u347279731_poultryv2_db'; 
+        } else {
+            // Local development database credentials
+            $host = 'localhost';
+            $user = 'root';
+            $pass = '';
+            $db   = 'poultryv2_db';
+        }
 
         $mysqli = new mysqli($host, $user, $pass, $db);
 
